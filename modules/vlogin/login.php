@@ -154,6 +154,10 @@ if ( $Module->isCurrentAction( 'Login' ) and
             $user = $userClass->loginUser( $userLogin, $userPassword );
             if ( $user instanceof eZUser )
             {
+				// HACK! seems to be no trigger for login/logout
+                if ( class_exists('sCacheCookieHelper') )
+                    sCacheCookieHelper::setCookie();
+
                 $access = $GLOBALS['eZCurrentAccess'];
                 $siteAccessResult = $user->hasAccessTo( 'user', 'login' );
                 $hasAccessToSite = false;
